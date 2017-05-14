@@ -1,4 +1,4 @@
-package bungeepluginmanager;
+package net.minplay.proxy.pluginmanager;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;

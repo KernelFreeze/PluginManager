@@ -1,4 +1,4 @@
-package bungeepluginmanager;
+package net.minplay.proxy.pluginmanager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

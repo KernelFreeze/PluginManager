@@ -1,4 +1,4 @@
-package bungeepluginmanager;
+package net.minplay.proxy.pluginmanager;
 
 import com.google.common.collect.Multimap;
 import net.md_5.bungee.api.ProxyServer;
@@ -10,9 +10,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -44,32 +42,29 @@ public class PluginUtils {
         //shutdown internal executor
         plugin.getExecutorService().shutdownNow();
         //stop all still active threads that belong to a plugin
-        for (Thread thread : Thread.getAllStackTraces().keySet()) {
+        Thread.getAllStackTraces().keySet().forEach((thread) -> {
             if (thread.getClass().getClassLoader() == pluginclassloader) {
                 try {
                     thread.interrupt();
                     thread.join(2000);
-                    if (thread.isAlive()) {
-                        thread.stop();
-                    }
+                    if (thread.isAlive()) thread.stop();
                 } catch (Throwable t) {
                     severe("Failed to stop thread that belong to plugin", t, plugin.getDescription().getName());
                 }
             }
-        }
+        });
         //finish uncompleted intents
         ModifiedPluginEventBus.completeIntents(plugin);
+
         //remove commands that were registered by plugin not through normal means
         try {
             Map<String, Command> commandMap = ReflectionUtils.getFieldValue(pluginmanager, "commandMap");
-            Iterator<Entry<String, Command>> iterator = commandMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Entry<String, Command> entry = iterator.next();
-                if (entry.getValue().getClass().getClassLoader() == pluginclassloader) {
-                    iterator.remove();
+            commandMap.forEach((key, val) -> {
+                if (val.getClass().getClassLoader() == pluginclassloader) {
+                    commandMap.remove(key);
                 }
-            }
-        } catch (Throwable t) {
+            });
+        } catch (Exception t) {
             severe("Failed to cleanup commandMap", t, plugin.getDescription().getName());
         }
         //cleanup internal listener and command maps from plugin refs

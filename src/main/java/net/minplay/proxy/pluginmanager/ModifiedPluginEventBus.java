@@ -1,4 +1,4 @@
-package bungeepluginmanager;
+package net.minplay.proxy.pluginmanager;
 
 import net.md_5.bungee.api.event.AsyncEvent;
 import net.md_5.bungee.api.plugin.Plugin;
