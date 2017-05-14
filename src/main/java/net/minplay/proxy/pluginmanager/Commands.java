@@ -12,7 +12,8 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -76,6 +77,10 @@ public class Commands extends Command implements TabExecutor {
                     sender.sendMessage(textWithColor("Plugin not found", ChatColor.RED));
                     return;
                 }
+                if (plugin == BungeePluginManager.getInstance()) {
+                    sender.sendMessage(textWithColor("That is not a good idea...", ChatColor.RED));
+                    return;
+                }
                 PluginUtils.unloadPlugin(plugin);
                 sender.sendMessage(textWithColor("Plugin unloaded", ChatColor.YELLOW));
                 return;
@@ -120,15 +125,13 @@ public class Commands extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(CommandSender commandSender, String[] strings) {
-        ArrayList<String> x = new ArrayList<>();
-        if (strings.length > 2) {
+        Set<String> matches = new HashSet<>();
+        if (strings.length > 1) {
             for (Plugin plugin : ProxyServer.getInstance().getPluginManager().getPlugins()) {
                 String name = plugin.getDescription().getName();
-                if (name.startsWith(strings[2])) {
-                    x.add(name);
-                }
+                if (name.toLowerCase().startsWith(strings[1].toLowerCase())) matches.add(name);
             }
         }
-        return x;
+        return matches;
     }
 }
