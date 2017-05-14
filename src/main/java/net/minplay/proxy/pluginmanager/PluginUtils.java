@@ -53,8 +53,9 @@ public class PluginUtils {
                 }
             }
         });
-        //finish uncompleted intents
-        ModifiedPluginEventBus.completeIntents(plugin);
+
+        // TODO: Unregister all Intents
+        // event.completeIntent(plugin);
 
         //remove commands that were registered by plugin not through normal means
         try {
