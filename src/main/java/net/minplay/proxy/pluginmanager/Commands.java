@@ -33,7 +33,7 @@ public class Commands extends Command implements TabExecutor {
 
     private static File findFile(String pluginname) {
         File folder = ProxyServer.getInstance().getPluginsFolder();
-        if (folder.exists()) {
+        if (folder.exists() && folder.isDirectory()) {
             for (File file : folder.listFiles()) {
                 try {
                     if (file.isFile() && file.getName().endsWith(".jar")) {
@@ -116,6 +116,7 @@ public class Commands extends Command implements TabExecutor {
             }
         }
     }
+
 
     @Override
     public Iterable<String> onTabComplete(CommandSender commandSender, String[] strings) {
