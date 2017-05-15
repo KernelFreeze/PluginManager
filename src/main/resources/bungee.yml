@@ -1,5 +1,5 @@
 name: BungeePluginManager
 main: net.minplay.proxy.pluginmanager.BungeePluginManager
-version: 1.1
-author: MinPlay Devs
+version: 1.2
+author: MinPlayDevs
 authors: [_Shevchik_, Kernelcraft, MrDoc94]

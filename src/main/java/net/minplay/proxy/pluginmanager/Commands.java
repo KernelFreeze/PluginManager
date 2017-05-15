@@ -70,11 +70,11 @@ public class Commands extends Command implements TabExecutor {
     private static void showHelp(CommandSender p) {
         if (p.hasPermission("pluginmanager.help")) {
             p.sendMessage(parseText("&7&m-----------------&c&l Usage &7&m-----------------"));
-            p.sendMessage(new ComponentBuilder("● pm load [plugin]: ").color(ChatColor.RED).append("Load a plugin").color(ChatColor.GRAY).create());
-            p.sendMessage(new ComponentBuilder("● pm unload [plugin]: ").color(ChatColor.RED).append("Unload a plugin").color(ChatColor.GRAY).create());
-            p.sendMessage(new ComponentBuilder("● pm reload [plugin]: ").color(ChatColor.RED).append("Reload a plugin").color(ChatColor.GRAY).create());
-            p.sendMessage(new ComponentBuilder("● pm usage [plugin]: ").color(ChatColor.RED).append("List commands a plugin has registered").color(ChatColor.GRAY).create());
-            p.sendMessage(new ComponentBuilder("● pm list: ").color(ChatColor.RED).append("List plugins").color(ChatColor.GRAY).create());
+            p.sendMessage(new ComponentBuilder("- pm load [plugin]: ").color(ChatColor.YELLOW).append("Load a plugin").color(ChatColor.GRAY).create());
+            p.sendMessage(new ComponentBuilder("- pm unload [plugin]: ").color(ChatColor.YELLOW).append("Unload a plugin").color(ChatColor.GRAY).create());
+            p.sendMessage(new ComponentBuilder("- pm reload [plugin]: ").color(ChatColor.YELLOW).append("Reload a plugin").color(ChatColor.GRAY).create());
+            p.sendMessage(new ComponentBuilder("- pm usage [plugin]: ").color(ChatColor.YELLOW).append("List commands a plugin has registered").color(ChatColor.GRAY).create());
+            p.sendMessage(new ComponentBuilder(" pm list: ").color(ChatColor.YELLOW).append("List plugins").color(ChatColor.GRAY).create());
             p.sendMessage(parseText("&7&m------------------------------------------------"));
         } else {
             p.sendMessage(TextComponent.fromLegacyText(ProxyServer.getInstance().getTranslation("no_permission")));
