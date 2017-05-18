@@ -10,6 +10,8 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.*;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.File;
 import java.io.InputStream;
@@ -49,8 +51,13 @@ public class Commands extends Command implements TabExecutor {
                         if (pdf == null) {
                             pdf = jar.getJarEntry("plugin.yml");
                         }
+
                         InputStream in = jar.getInputStream(pdf);
-                        final PluginDescription desc = new Yaml().loadAs(in, PluginDescription.class);
+                        Representer representer = new Representer();
+                        representer.getPropertyUtils().setSkipMissingProperties(true);
+                        PluginDescription desc = new Yaml(new Constructor(PluginDescription.class), representer).loadAs(in, PluginDescription.class);
+                        desc.setFile(file);
+
                         if (desc.getName().equalsIgnoreCase(pluginname)) return file;
                     }
                 } catch (Exception ex) {
